@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+	--background: #000000;
+	--foreground: #FFFFFF;
+}
+
+@theme {
+	--text-menu-size: 25px;
+	--text-content-headline-size: 40px;
+	--text-content-headline-sub-size: 20px;
+	--text-body-size: 16px;
+	--text-contact-size: 24px;
+}
+
+@media (max-width: 640px) {
+	:root {
+		--text-menu-size: 16px;
+		--text-content-headline-size: 25px;
+		--text-content-headline-sub-size: 16px;
+		--text-body-size: 16px;
+		--text-contact-size: 24px;
+	}
+}
+
+body {
+	background: var(--background);
+	color: var(--foreground);
+}
