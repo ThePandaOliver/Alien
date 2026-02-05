@@ -3,6 +3,11 @@ import {Exo_2} from "next/font/google";
 import "./globals.css";
 import {ReactNode} from "react";
 import QueryProvider from "@/app/queryProvider";
+import DeviceComponent from "@/components/deviceComponent";
+import Image from "next/image";
+import Header from "@/app/header";
+import ClientLayout from "@/app/clientLayout";
+import ContactSection from "@/app/contactSection";
 
 const exo = Exo_2({
 	subsets: ["latin"],
@@ -19,9 +24,39 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode }>
 		<html lang="en">
 			<body className={`${exo.className} text-body-size antialiased min-h-screen flex flex-col flex-1`}>
 				<QueryProvider>
-					{children}
+					<div className={"max-h-screen flex flex-col flex-1"}>
+						<Header/>
+
+						<DeviceComponent mobile={<MobileLayout/>}>
+							<>
+								<Image src={"/alien_bg_red.jpg"} alt={"Alien background"} draggable={false} fill preload={true}
+									   className={"absolute top-0 left-0 w-full h-full object-cover -z-10"}/>
+
+								<main className={"relative flex-1"}>
+									<ClientLayout>
+										{children}
+									</ClientLayout>
+								</main>
+
+								<ContactSection/>
+							</>
+						</DeviceComponent>
+					</div>
 				</QueryProvider>
 			</body>
 		</html>
 	);
+
+	function MobileLayout() {
+		return (
+			<div className={"relative flex-1 flex flex-col"}>
+				<main className={"flex-1 overflow-scroll relative"}>
+					<ClientLayout>
+						{children}
+					</ClientLayout>
+				</main>
+				<ContactSection/>
+			</div>
+		);
+	}
 }

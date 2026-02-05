@@ -26,8 +26,13 @@ function NavList() {
 	const {data: menus} = useSuspenseQuery({
 		queryKey: ["nav menus"],
 		queryFn: async () => {
-			const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/menus`);
-			return response.data as MenuData[] | undefined;
+			try {
+				const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/menus`);
+				return response.data as MenuData[] | undefined;
+			} catch (e) {
+				console.warn("Failed to fetch menus (likely during build), returning empty list.");
+				return [] as MenuData[];
+			}
 		},
 	});
 
